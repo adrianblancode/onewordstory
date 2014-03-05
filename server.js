@@ -2,7 +2,7 @@
 var connect = require('connect')
     , express = require('express')
     , io = require('socket.io')
-    , port = (process.env.PORT || 8081);
+    , port = (process.env.PORT || 9001);
 
 //Setup Express
 var server = express.createServer();
@@ -60,9 +60,9 @@ io.sockets.on('connection', function(socket){
 server.get('/', function(req,res){
   res.render('index.jade', {
     locals : { 
-              title : 'Your Page Title'
-             ,description: 'Your Page Description'
-             ,author: 'Your Name'
+              title : 'onewordstory'
+             ,description: 'The most epic story of them all has just begun.'
+             ,author: 'adrianblp, robineng, cwinsnes'
              ,analyticssiteid: 'XXXXXXX' 
             }
   });

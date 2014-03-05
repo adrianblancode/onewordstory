@@ -2,5 +2,7 @@ extends layout
 
 block content
 	div
-		a(id='sender')='Send a Message'
+		form
+			input(type='input', id='message')
+			input(type='button', value='Send', id='sender')
 		ul(id='receiver')
