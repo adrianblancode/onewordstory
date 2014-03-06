@@ -11,6 +11,7 @@ $(document).ready(function() {
 
   socket.on('server_message', function(data){
     var content = document.createTextNode(data + ' ');
+    document.getElementById('message').value = '';
     document.getElementById('reciever').appendChild(content);
   });
 });
