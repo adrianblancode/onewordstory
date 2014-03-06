@@ -1,8 +1,11 @@
 extends layout
 
 block content
-	div
-		form
-			input(type='input', id='message')
-			input(type='button', value='Send', id='sender')
-		ul(id='receiver')
+	div(class='center')
+		h1 onewordstory.
+
+		div(id='reciever', class='scrollbox')
+
+		p Choose your words wisely.
+		input(type='input', class='input', id='message', maxlength='20')
+		input(type='button', class='button', value='Send', id='sender')
