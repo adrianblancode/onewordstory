@@ -1,7 +1,7 @@
 {
-  "name": "YOUR-PROJECT-NAME-HERE",
-  "description": "YOUR PROJECT DESCRIPTION HERE",
-  "author": "YOUR NAME <your@emailaddress.com>",
+  "name": "onewordstory.",
+  "description": "Choose your words wisely.",
+  "author": "adrianblp, cwinsnes, robineng",
   "version": "0.0.1",
   "dependencies": {
     "connect": "1.8.5",
