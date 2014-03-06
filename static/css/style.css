@@ -142,6 +142,8 @@ p {
 
 .input {
     font-size: 17px;
+    font-family: Open Sans;
+    text-shadow: 0px 1px 1px rgba(150, 150, 150, 0.4);
 
     background-color: #FFF;
     border: 1px solid #CCC;
