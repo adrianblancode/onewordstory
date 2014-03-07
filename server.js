@@ -68,6 +68,17 @@ server.get('/', function(req,res){
   });
 });
 
+server.get('/login', function(req,res){
+  res.render('login.jade', {
+    locals : { 
+              title : 'onewordstory'
+             ,description: 'The most epic story of them all has just begun.'
+             ,author: 'adrianblp, robineng, cwinsnes'
+             ,analyticssiteid: 'XXXXXXX' 
+            }
+  });
+});
+
 
 //A Route for Creating a 500 Error (Useful to keep around)
 server.get('/500', function(req, res){
