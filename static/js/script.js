@@ -15,3 +15,9 @@ $(document).ready(function() {
     document.getElementById('reciever').appendChild(content);
   });
 });
+
+function changeColor(color){
+    if(/^#[0-9A-F]{6}$/i.test(color)){
+        document.getElementById('color').style.background = color;
+    }
+}

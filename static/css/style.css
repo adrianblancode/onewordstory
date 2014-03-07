@@ -154,8 +154,12 @@ p.login {
     margin-left: 15px;
 }
 
-.button.login {
+.topmargin {
     margin-top: 20px;
+}
+
+.largetopmargin {
+    margin-top: 50px;
 }
 
 .input {
@@ -196,7 +200,15 @@ p.login {
     text-align: left;    
 }
 
-
+.colorbox  {
+    width: 120px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    background-color: #FFFFFF;
+}
 
 
 

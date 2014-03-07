@@ -42,6 +42,8 @@ var io = io.listen(server);
 io.sockets.on('connection', function(socket){
   console.log('Client Connected');
   socket.on('message', function(data){
+    data = data.substring(0,20).split(" ")[0]; //Takes everything before first space
+
     socket.broadcast.emit('server_message',data);
     socket.emit('server_message',data);
   });
