@@ -5,7 +5,7 @@ var connect = require('connect')
     , port = (process.env.PORT || 9001);
 
 //Setup Express
-var server = express.createServer();
+var server = module.exports = express.createServer();
 server.configure(function(){
     server.set('views', __dirname + '/views');
     server.set('view options', { layout: false });
@@ -36,6 +36,20 @@ server.error(function(err, req, res, next){
     }
 });
 server.listen( port);
+
+var mongoose    = require('mongoose');
+var userModel = require('./models/UserModel');
+mongoose.connect('mongodb://localhost/oneword');
+user = new userModel();
+user.username = "användarn";
+user.color = "blå";
+user.password = "password1";
+user.salt = "saltarN";
+user.save(function (err) {
+  if(err){
+    console.log("Error");
+  }
+});
 
 //Setup Socket.IO
 var io = io.listen(server);
