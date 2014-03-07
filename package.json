@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "dependencies": {
     "mongodb": "> 1.1.10",
+    "mongojs": "> 1.1.10",
     "connect": "1.8.5",
     "express": "2.5.2",
     "jade": "0.20.0",
