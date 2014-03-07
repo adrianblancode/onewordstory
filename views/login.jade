@@ -2,11 +2,13 @@ extends layout
 
 block content
     div(class='center')
-        h1 onewordstory.
+        a(href='http://localhost:9001/')
+            h1 onewordstory.
 
-        div
+        form(action='', method='POST')
             input(type='text', class='input', placeholder='Username', maxlength='20')
-        div
-            input(type='text', class='input login', placeholder='Password', maxlength='20')
-        div
-            input(type='submit', class='button login', id='sender', value='Log in')
+            div
+                input(type='password', class='input login password', placeholder='Password', maxlength='20')
+                div(class='center')
+                    input(type='submit', class='button login', id='sender', value='Log in')
+                    input(type='submit', class='button login leftmargin', id='sender', value='Register')

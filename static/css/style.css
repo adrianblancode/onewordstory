@@ -102,6 +102,11 @@ body {
     font-family: Open Sans;
 }
 
+a:link {text-decoration: none}
+a:visited {text-decoration: none}
+a:active {text-decoration: none}
+a:hover {text-decoration: underline;}
+
 h1 {
     margin-left: auto;
     margin-right: auto;
@@ -116,6 +121,13 @@ p {
     text-shadow: 0px 1px 1px rgba(150, 150, 150, 0.4);
 }
 
+p.login {
+    text-align: right;
+    position: absolute;
+    top: -10px;
+    right: 4px;
+}
+
 .button {
     text-transform: uppercase;
     font-weight: bold;
@@ -128,7 +140,6 @@ p {
     border-radius: 2px;
 
     vertical-align: top;
-    margin-left: 15px;
     padding: 12px 20px;
 
     color: #FFF;
@@ -137,6 +148,14 @@ p {
     
     text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
     box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.2) inset, 0px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.button.leftmargin{
+    margin-left: 15px;
+}
+
+.button.login {
+    margin-top: 20px;
 }
 
 .input {
@@ -151,6 +170,10 @@ p {
     border: 1px solid #CCC;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1) inset;
     transition: box-shadow 0.45s ease 0s, border-color 0.45s ease-in-out 0s;
+}
+
+.input.password {
+        margin-top: 10px;
 }
 
 .scrollbox {
@@ -173,9 +196,7 @@ p {
     text-align: left;    
 }
 
-.login {
-    margin-top: 20px;
-}
+
 
 
 

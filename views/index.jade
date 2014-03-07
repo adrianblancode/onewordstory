@@ -1,12 +1,15 @@
 extends layout
 
 block content
+	a(href='http://localhost:9001/login')
+		p(class='login') Log in
 	div(class='center')
-		h1 onewordstory.
+		a(href='http://localhost:9001/')
+			h1 onewordstory.
 
 		div(id='reciever', class='scrollbox')
 
 		p Choose your words wisely.
 
 		input(type='text', class='input', id='message', maxlength='20')
-		input(type='submit', class='button',  id='sender', value='Write')
+		input(type='submit', class='button leftmargin',  id='sender', value='Write')
