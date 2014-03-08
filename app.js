@@ -1,7 +1,6 @@
 //Set up dependencies
 var express = require('express');
 var http = require('http');
-var connect = require('connect');
 var io = require('socket.io');
 var path = require('path');
 var fs = require('fs');
@@ -18,7 +17,7 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('Sex is not the secret'));
 app.use(express.session());
 app.use(app.router);
-app.use(connect.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //set up controllers
 fs.readdirSync('./controllers').forEach(function (file) {
@@ -29,7 +28,7 @@ fs.readdirSync('./controllers').forEach(function (file) {
   }
 });
 
-http.createServer(app).listen(app.get('port'), function() {
+var server = http.createServer(app).listen(app.get('port'), function() {
   console.log("Server now created");
   console.log('Server listening on port ' + app.get('port'));
 });
