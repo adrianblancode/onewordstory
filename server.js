@@ -5,7 +5,7 @@ var connect = require('connect')
     , port = (process.env.PORT || 9001);
 
 //Setup Express
-var server = express.createServer();
+var server = module.exports = express.createServer();
 server.configure(function(){
     server.set('views', __dirname + '/views');
     server.set('view options', { layout: false });
