@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 var storySchema = new Schema({
     id : ObjectId,
     title : { type: String, required: true},
-    admin : { type: Schema.UserModel.ObjectId, required: true}
+    admin : { type: Schema.ObjectId, ref: 'UserModel', required: true}
 });
 
-module.exports = mongoose.model('Storys', memberSchema);
+module.exports = mongoose.model('Stories', storySchema);
