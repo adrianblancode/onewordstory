@@ -18,6 +18,7 @@ app.use(express.cookieParser('Sex is not the secret'));
 app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, '/static')));
+app.use(express.static(path.join(__dirname, '/node_modules')));
 
 //set up controllers
 fs.readdirSync('./controllers').forEach(function (file) {
@@ -32,3 +33,5 @@ var server = http.createServer(app).listen(app.get('port'), function() {
   console.log("Server now created");
   console.log('Server listening on port ' + app.get('port'));
 });
+
+var io = io.listen(server);
