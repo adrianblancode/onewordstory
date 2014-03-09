@@ -14,8 +14,12 @@ module.exports.controller = function(app) {
    */
   app.get('/:id([0-9]+)', function(req, res) {
     var id = req.params.id;
-    stories.findOne({_id : id}, function(err, ans) {
+    stories.findOne({storyid : id}, function(err, ans) {
       //Make code that show the story and stuffz
     });
+  });
+
+  app.get('/createstory', function(req, res) {
+    var result = stories.find().sort({storyid:-1}).limit(1);
   });
 }
