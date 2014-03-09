@@ -37,6 +37,7 @@ var io = io.listen(server);
 io.sockets.on('connection', function(socket){
   console.log('Client connected');
   socket.on('message', function(data) {
+    data = data.substring(0,20).split(" ")[0];
     socket.broadcast.emit('server_message', data);
     socket.emit('server_message', data);
   });
