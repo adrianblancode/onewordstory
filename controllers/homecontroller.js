@@ -11,6 +11,7 @@ module.exports.controller = function (app) {
   });
 
   app.get('/500', function(req, res) {
-    throw new Error('This is a 500 error');
+    res.render('500');
+    throw new Error('500 error');
   });
 }

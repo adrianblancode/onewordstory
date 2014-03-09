@@ -18,12 +18,11 @@ app.use(express.cookieParser('Sex is not the secret'));
 app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, '/static')));
-app.use(express.static(path.join(__dirname, '/node_modules')));
 
 //set up controllers
 fs.readdirSync('./controllers').forEach(function (file) {
   if(file.substr(-3) == '.js') {
-    console.log(file);
+    console.log('Controller : ' + file);
     route = require('./controllers/' + file);
     route.controller(app);
   }
@@ -35,3 +34,13 @@ var server = http.createServer(app).listen(app.get('port'), function() {
 });
 
 var io = io.listen(server);
+io.sockets.on('connection', function(socket){
+  console.log('Client connected');
+  socket.on('message', function(data) {
+    socket.broadcast.emit('server_message', data);
+    socket.emit('server_message', data);
+  });
+  socket.on('disconnect', function() {
+    console.log('Client disconnected');
+  });
+});
