@@ -16,8 +16,10 @@ $(document).ready(function() {
   });
 });
 
-function changeColor(color){
-    if(/^#[0-9A-F]{6}$/i.test(color)){
-        document.getElementById('color').style.background = color;
+function changeColor(c, input){
+    input.value = input.value.toUpperCase();
+
+    if(/[0-9A-F]{6}$/i.test(c)){
+        document.getElementById('color').style.background = '#' + c;
     }
 }
