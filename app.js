@@ -17,7 +17,7 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('Sex is not the secret'));
 app.use(express.session());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/static')));
 
 //set up controllers
 fs.readdirSync('./controllers').forEach(function (file) {
