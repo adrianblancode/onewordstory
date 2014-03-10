@@ -3,6 +3,11 @@ extends layout
 block content
     a(href='http://localhost:9001/logout')
     p(class='login') Log out
+    if(locals.colors)
+        script.
+            alert(locals.colors)
+    else
+        h1 no color
     
     div(class='center')
         a(href='http://localhost:9001/')
@@ -13,9 +18,14 @@ block content
         form(action='/settings/color', method='POST')
             label 
             #
-            input(type='text', name='user[color]', onkeyup='changeColor(this.value, this)', class='input', id='colorinput', placeholder='Pick color', maxlength='6')
+            input(type='text', name='user[colors]', onkeyup='changeColor(this.value, this)', class='input', id='colorinput', placeholder='Pick color', maxlength='6')
             input(type='submit', class='button', id='sender', value='Pick')
         
         div(class='largetopmargin')
             input(type='text', class='input', placeholder='Create new story')
             input(type='submit', class='button',  id='sender', value='Create')
+
+    script.
+        window.onload=function(){
+            //alert(locals.colors);
+        }
