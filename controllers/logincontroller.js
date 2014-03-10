@@ -46,9 +46,12 @@ module.exports.controller = function(app) {
             req.session.user = obj;
             res.redirect('/');
           });
+        } else {
+          console.log('Wrong username or password');
+          res.redirect('/login');
         }
       } else {
-        console.log('Can not find user ' + req.body.user.username);
+        console.log('Wrong username or password');
         res.redirect('/login');
       }
     });
@@ -84,8 +87,10 @@ module.exports.controller = function(app) {
             console.log('Error when trying to save user');
           }
         });
-        req.session.username = req.body.user.username;
-        res.redirect('/');
+        users.findOne({username : req.body.user.username},{username : true, color : true}, function(err,obj) {  
+            req.session.user = obj;
+            res.redirect('/');
+          });
       }
 
     });
@@ -93,9 +98,9 @@ module.exports.controller = function(app) {
 
 
   app.get('/logout', function(req, res) {
-    if(req.session.username) {
+    if(req.session.user) {
       console.log(req.session.username + ' wants to log out');
-      delete req.session.username;
+      delete req.session.user;
       res.redirect('/');
     } else {
       res.send('Nothing to log out from?\nYou should probably leave');
