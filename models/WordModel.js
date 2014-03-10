@@ -3,7 +3,6 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId;
 
 var wordSchema = new Schema({
-    id : ObjectId,
     userId : { type: Schema.ObjectId, ref: 'UserModel', required: true},
     storyId : { type: Schema.ObjectId, ref: 'StoryModel', required: true},
     data : {type: String, required: true},
