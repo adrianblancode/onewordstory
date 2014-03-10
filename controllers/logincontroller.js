@@ -42,7 +42,7 @@ module.exports.controller = function(app) {
         if(hashgen(req.body.user.password, us.salt) === us.password) {
           console.log(req.body.user.username + ' logged in');
 //        req.session.username = req.body.user.username;
-          users.findOne({username : req.body.user.username},{username : true, color : true}, function(err,obj) {  
+          users.findOne({username : req.body.user.username},{username : true, colors : true}, function(err,obj) {  
             req.session.user = obj;
             res.redirect('/');
           });
@@ -75,11 +75,11 @@ module.exports.controller = function(app) {
         console.log('Creating user ' + req.body.user.username);
         var salt  = (Math.random()+1).toString(36);
         var hash = hashgen(req.body.user.password, salt);
-        var color = '000000';
+        var colors = '000000';
 
         var newUser = new users();
         newUser.username = req.body.user.username;
-        newUser.color = color;
+        newUser.colors = colors;
         newUser.password = hash;
         newUser.salt = salt;
         newUser.save(function(err) {
@@ -87,7 +87,7 @@ module.exports.controller = function(app) {
             console.log('Error when trying to save user');
           }
         });
-        users.findOne({username : req.body.user.username},{username : true, color : true}, function(err,obj) {  
+        users.findOne({username : req.body.user.username},{username : true, colors : true}, function(err,obj) {  
             req.session.user = obj;
             res.redirect('/');
           });
