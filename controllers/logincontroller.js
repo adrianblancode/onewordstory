@@ -3,7 +3,7 @@ module.exports.controller = function(app) {
     res.render('login', {
        title : 'login - onewordstory'
       ,description : 'Log in to your story account'
-      ,author : 'adrianblp, cwinsnes, robinng'
+      ,author : 'adrianblp, cwinsnes, robineng'
     });
   });
 }
