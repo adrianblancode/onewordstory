@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    div(class='center')
+        a(href='http://localhost:9001/')
+            h1 onewordstory.
+
+        form(action='/createstory/create', method='POST')
+            input(type='text', class='input', name = 'story[title]', placeholder='Title', maxlength='20')
+            div
+                input(type='submit', class='button topmargin leftmargin center', id='sender', value='Create Story')
+            
