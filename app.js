@@ -70,7 +70,7 @@ function checkAdminStory(){
       console.log('hittade inte admin');
       admin = new users();
       admin.username = 'admin';
-      admin.color = '000000';
+      admin.colors = '000000';
       admin.password = '9acf0019f44a50f53860460e27048f45a4640214';
       admin.salt = '1.dfc7dreo5g0hpvi';
       admin.save(function(err) {
