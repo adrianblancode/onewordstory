@@ -3,12 +3,15 @@ module.exports.controller = function (app) {
    * index
    */
   app.get('/', function(req, res) {
-    res.locals.loggedin = (req.session.username)? true : false;
+    if(req.session.user) {
+      res.locals.loggedin = true;
+    } else {
+      res.locals.loggedin = false;
+    }
     res.render('index', {
        title : 'onewordstory'
       ,description : 'The most epic story ever written'
       ,author : 'adrianblp, cwinsnes, robineng'
-      ,loggedin : (req.session.username)?true : false
     });
   });
 

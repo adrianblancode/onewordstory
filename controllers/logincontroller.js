@@ -41,9 +41,11 @@ module.exports.controller = function(app) {
       if(us) {
         if(hashgen(req.body.user.password, us.salt) === us.password) {
           console.log(req.body.user.username + ' logged in');
-          req.session.username = req.body.user.username;
-          console.log(req.session.username);
-          res.redirect('/');
+//        req.session.username = req.body.user.username;
+          users.findOne({username : req.body.user.username},{username : true, color : true}, function(err,obj) {  
+            req.session.user = obj;
+            res.redirect('/');
+          });
         }
       } else {
         console.log('Can not find user ' + req.body.user.username);
