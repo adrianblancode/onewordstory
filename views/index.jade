@@ -1,12 +1,16 @@
 extends layout
 
 block content
-  if(!locals.loggedin)
-    a(href='http://localhost:9001/login')
-      p(class='login') Log in
-  else 
-    a(href='http://localhost:9001/logout')
-      p(class='login') Log out
+  span(class='topbar')
+      if(!locals.loggedin)
+        a(href='http://localhost:9001/login')
+          p Log in
+      else 
+        a(href='http://localhost:9001/logout')
+          p(class='login') Log out
+        a(href='http://localhost:9001/settings')
+          p Settings
+          
 
   div(class='center')
     a(href='http://localhost:9001/')

@@ -10,9 +10,8 @@ var users = mongoose.model('Users', userModel);
 
 module.exports.controller = function(app) {
   app.get('/settings', function(req, res) {
-    if(req.session.user.colors) {
+    if(req.session.user) {
       res.locals.colors = req.session.user.colors;
-      console.log('color 2: ' + req.session.user.colors);
     }
     else{
       res.redirect('/login');
@@ -29,11 +28,14 @@ module.exports.controller = function(app) {
   app.post('/settings/color', function(req, res) {
     if(req.session.user && /[0-9A-F]{6}$/i.test(req.body.user.colors)){
       console.log('color: ' + req.body.user.colors)
-      users.update(
-        {name : req.session.user.username},
-        {$set: {'color' : + req.body.user.colors}});
       req.session.user.colors = req.body.user.colors;
+
+      users.findOne({username : req.session.user.username}, function(err, us) {
+        us.colors = req.session.user.colors;
+        us.save();
+      });
     }
+
     res.redirect('/settings');
   });
 }
