@@ -22,7 +22,6 @@ function changeColor(c, input){
 }
 
 function initColor(c){
-  document.getElementById('color').style.background = c;
-  document.getElementById('colorinput').value = document.getElementById('colorinput').value.toUpperCase().replace("#", "");
+  document.getElementById('color').style.background = '#' + c;
+  document.getElementById('colorinput').value = c.toUpperCase();
 }
-//});
