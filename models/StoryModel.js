@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId;
 
 var storySchema = new Schema({
-    title : { type: String, required: true},
+    title : { type: String, required: true, unique: true},
     admin : { type: Schema.ObjectId, ref: 'UserModel', required: true}
 });
 
