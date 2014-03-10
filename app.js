@@ -28,10 +28,13 @@ fs.readdirSync('./controllers').forEach(function (file) {
   }
 });
 
+checkAdminStory();
+
 var server = http.createServer(app).listen(app.get('port'), function() {
   console.log("Server now created");
   console.log('Server listening on port ' + app.get('port'));
 });
+
 
 var io = io.listen(server);
 io.sockets.on('connection', function(socket){
@@ -45,3 +48,53 @@ io.sockets.on('connection', function(socket){
     console.log('Client disconnected');
   });
 });
+
+
+//Check if admin and mainstory exists
+function checkAdminStory(){
+  console.log('kör');
+  var mongoose = require('mongoose');
+  var userModel = require('./models/UserModel');
+  var storyModel = require('./models/StoryModel');
+  mongoose.connect('mongodb://localhost/oneword');
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error when opening database'));
+  db.once('open', function callback () {
+    //Do nothing special here
+  });
+  var users = mongoose.model('Users', userModel);
+  var stories = mongoose.model('Stories', storyModel);
+
+  users.findOne({username : 'admin'},{username : true, color : true}, function(err,obj) {  
+    if(!obj){
+      console.log('hittade inte admin');
+      admin = new users();
+      admin.username = 'admin';
+      admin.color = '000000';
+      admin.password = '9acf0019f44a50f53860460e27048f45a4640214';
+      admin.salt = '1.dfc7dreo5g0hpvi';
+      admin.save(function(err) {
+        if(err) {
+          console.log('Error when trying to create admin');
+        }
+      });
+    } else {
+      console.log('hittade admin');
+      admin = obj;
+    }
+    stories.findOne({title: 'mainstory' , admin: admin}, function(err, obj) {
+      if(!obj){
+        console.log('skapar story');
+        mainstory = new stories();
+        mainstory.title = 'mainstory';
+        mainstory.admin = admin;
+        mainstory.save(function(err) {
+          if(err){
+            console.log('error when trying to create mainstory')
+          }
+        });
+      }
+    });
+
+  });
+}
