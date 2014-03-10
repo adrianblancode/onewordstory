@@ -40,6 +40,9 @@ module.exports.controller = function(app) {
       if(us) {
         if(hashgen(req.body.user.password, us.salt) === us.password) {
           console.log(req.body.user.username + ' logged in');
+          req.session.username = req.body.user.username;
+          console.log(req.session.username);
+          res.redirect('/');
         }
       } else {
         console.log('Can not find user ' + req.body.user.username);
@@ -77,8 +80,21 @@ module.exports.controller = function(app) {
             console.log('Error when trying to save user');
           }
         });
+        req.session.username = req.body.user.username;
+        res.redirect('/');
       }
 
     });
+  });
+
+
+  app.get('/logout', function(req, res) {
+    if(req.session.username) {
+      console.log(req.session.username + ' wants to log out');
+      delete req.session.username;
+      res.redirect('/');
+    } else {
+      res.send('Nothing to log out from?\nYou should probably leave');
+    }
   });
 }

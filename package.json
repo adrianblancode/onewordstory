@@ -10,7 +10,9 @@
     "jade": "0.20.0",
     "mongoose": "2.4.8",
     "socket.io": "0.8.7",
-    "crypto" : "0.0.3"
+    "crypto" : "0.0.3",
+    "passport" : "0.2.0",
+    "passport-local" : "1.0.0"
   },
   "devDependencies": {
     "vows": "0.5.x",
