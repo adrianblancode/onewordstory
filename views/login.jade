@@ -5,11 +5,11 @@ block content
         a(href='http://localhost:9001/')
             h1 onewordstory.
 
-        form(action='', method='POST')
-            input(type='text', class='input', placeholder='Username', maxlength='20')
+        form(action='/register', method='POST')
+            input(type='text', class='input', name = 'user[username]', placeholder='Username', maxlength='20')
             div
-                input(type='password', class='input login password', placeholder='Password', maxlength='20')
+                input(type='password', class='input login password', name = 'user[password]', placeholder='Password', maxlength='20')
                 div(class='center')
-                    input(type='submit', class='button topmargin', id='sender', value='Log in')
-                    input(type='submit', class='button topmargin leftmargin', id='sender', value='Register')
+                    input(type='submit', class='button topmargin', id='sender', value='Log in', formaction='/login/login')
+                    input(type='submit', class='button topmargin leftmargin', id='sender', value='Register', formaction='/login/register')
                     //TODO, check which button was triggered
