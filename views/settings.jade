@@ -1,11 +1,16 @@
 extends layout
 
 block content
-    a(href='http://localhost:9001/logout')
-    p(class='login') Log out
+    div(class='topbar')
+        a(href='http://localhost:9001/logout')
+            p Log out
     if(locals.colors)
         script.
-            alert(locals.colors)
+            var col = "#{locals.colors}";
+
+            window.onload=function(){
+                initColor(col);
+            }
     else
         h1 no color
     
@@ -24,8 +29,3 @@ block content
         div(class='largetopmargin')
             input(type='text', class='input', placeholder='Create new story')
             input(type='submit', class='button',  id='sender', value='Create')
-
-    script.
-        window.onload=function(){
-            //alert(locals.colors);
-        }
