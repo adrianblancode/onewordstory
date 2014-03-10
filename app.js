@@ -36,11 +36,13 @@ var server = http.createServer(app).listen(app.get('port'), function() {
 var io = io.listen(server);
 io.sockets.on('connection', function(socket){
   console.log('Client connected');
-  console.log('url' + socket.handshake.url);
   socket.on('message', function(data) {
+    console.log(data);
+    var socketurl = socket.handshake.url;
+    var storyname = socketurl.split('storyname=')[1].split('&')[0];
+    console.log(storyname);
     data = data.substring(0,20).split(" ")[0];
-    socket.broadcast.emit('server_message', data);
-    socket.emit('server_message', data);
+    socket.emit('server_' + storyname, data);
   });
   socket.on('disconnect', function() {
     console.log('Client disconnected');

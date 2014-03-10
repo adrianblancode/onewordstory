@@ -8,6 +8,7 @@ module.exports.controller = function (app) {
     } else {
       res.locals.loggedin = false;
     }
+    res.locals.storyname = 'mainstory';
     res.render('index', {
        title : 'onewordstory'
       ,description : 'The most epic story ever written'

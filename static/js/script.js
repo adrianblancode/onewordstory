@@ -1,4 +1,4 @@
-$(document).ready(function() {   
+//$(document).ready(function() {   
 
   /*var socket = io.connect();
 
@@ -25,3 +25,4 @@ function initColor(c){
   document.getElementById('color').style.background = c;
   document.getElementById('colorinput').value = document.getElementById('colorinput').value.toUpperCase().replace("#", "");
 }
+//});

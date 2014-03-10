@@ -1,17 +1,5 @@
 extends layout
 
-block append head
-  script.
-    var socket = io.connect();
-    function emitmessage() {
-      console.log('test');
-      socket.emit('message', document.getElementById('message').value);
-    }
-    socket.on('server_message', function(data) {
-        var content = document.createTextNode(data + ' ');
-        document.getElementById('message').value = ' ';
-        document.getElementById('reciever').appendChild(content);
-    });
 block content
   if(!locals.loggedin)
     a(href='http://localhost:9001/login')
@@ -29,4 +17,22 @@ block content
     p Choose your words wisely.
 
     input(type='text', class='input', id='message', maxlength='20')
-    input(type='submit', class='button leftmargin',  onClick='emitmessage()', id='sender', value='Write')
+    input(type='submit', class='button leftmargin', id='sender', value='Write')
+
+append footer
+  script(defer).
+    $(document).ready(function() { 
+      //Get the storyname from the locals variable
+      var storyname =!{JSON.stringify(locals)}.storyname;
+      var socket = io.connect('http://localhost:9001/?storyname=' + storyname);
+      $('#sender').bind('click', function() {
+        socket.emit('message', document.getElementById('message').value);
+      });
+
+      socket.on('server_' + storyname, function(data) {
+          console.log(data);
+          var content = document.createTextNode(data + ' ');
+          document.getElementById('message').value = ' ';
+          document.getElementById('reciever').appendChild(content);
+      });
+    });
