@@ -1,12 +1,17 @@
 extends layout
 
 block content
+    div(class='topbar')
+        a(href='http://localhost:9001/logout')
+            p(class='login') Log out
+        a(href='http://localhost:9001/settings')
+            p Settings
+        
+
     div(class='center')
         a(href='http://localhost:9001/')
             h1 onewordstory.
 
-        form(action='/createstory/create', method='POST')
-            input(type='text', class='input', name = 'story[title]', placeholder='Title', maxlength='20')
-            div
-                input(type='submit', class='button topmargin leftmargin center', id='sender', value='Create Story')
-            
+        form(action='/createstory/create', method='POST', class='largetopmargin')
+            input(type='text', class='input', name = 'story[title]', placeholder='Create new story', maxlength='20')
+            input(type='submit', class='button',  id='sender', value='Create')
