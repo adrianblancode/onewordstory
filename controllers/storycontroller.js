@@ -12,7 +12,7 @@ module.exports.controller = function(app) {
   /**
    * Get story with the id 'id'
    */
-  app.get('/:id([0-9]+)', function(req, res) {
+  app.get('/:name([a-zA-Z]+)', function(req, res) {
     var id = req.params.id;
     stories.findOne({storyid : id}, function(err, ans) {
       //Make code that show the story and stuffz
