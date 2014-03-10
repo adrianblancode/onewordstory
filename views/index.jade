@@ -1,15 +1,20 @@
 extends layout
 
 block content
-	a(href='http://localhost:9001/login')
-		p(class='login') Log in
-	div(class='center')
-		a(href='http://localhost:9001/')
-			h1 onewordstory.
+  if(!locals.loggedin)
+    a(href='http://localhost:9001/login')
+      p(class='login') Log in
+  else 
+    a(href='http://localhost:9001/logout')
+      p(class='login') Log out
 
-		div(id='reciever', class='scrollbox')
+  div(class='center')
+    a(href='http://localhost:9001/')
+      h1 onewordstory.
 
-		p Choose your words wisely.
+    div(id='reciever', class='scrollbox')
 
-		input(type='text', class='input', id='message', maxlength='20')
-		input(type='submit', class='button leftmargin',  id='sender', value='Write')
+    p Choose your words wisely.
+
+    input(type='text', class='input', id='message', maxlength='20')
+    input(type='submit', class='button leftmargin',  id='sender', value='Write')
