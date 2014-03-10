@@ -35,6 +35,7 @@ module.exports.controller = function(app) {
     users.findOne({username : req.body.user.username}, function(err, us) {
       if(err) { 
         console.log('Error when trying to find users in database');
+        res.redirect('/login');
       }
       //Find users with same username
       if(us) {
@@ -46,6 +47,7 @@ module.exports.controller = function(app) {
         }
       } else {
         console.log('Can not find user ' + req.body.user.username);
+        res.redirect('/login');
       }
     });
   });
