@@ -54,17 +54,19 @@ var io = io.listen(server);
 io.sockets.on('connection', function(socket){
   console.log('Client connected');
   socket.on('message', function(data) {
-    console.log(data);
+    console.log('message recieved');
     var socketurl = socket.handshake.url;
     console.log(socketurl);
-    var storyid = socketurl.split('storyname=')[1].split('&')[0];
+    var storyid  = socketurl.split('storyname=')[1].split('&')[0];
     var userid = socketurl.split('username=')[1].split('&')[0];
+    var color = socketurl.split('color=')[1].split('&')[0];
+    socket.broadcast.emit('server_' + storyid, {data : data, color : color});
+    socket.emit('server_' + storyid, {data : data, color : color});
     var word = new words();
     word.userId = userid;
     word.storyId = storyid;
     word.data = data;
     word.save();
-    socket.emit('server_' + storyname, data);
   });
   socket.on('disconnect', function() {
     console.log('Client disconnected');
@@ -75,7 +77,7 @@ io.sockets.on('connection', function(socket){
 //Check if admin and mainstory exists
 function checkAdminStory(){
 
-  users.findOne({username : 'admin'},{username : true, color : true}, function(err,obj) {  
+  users.findOne({username : 'admin'},{username : true, colors : true}, function(err,obj) {  
     if(!obj){
       console.log('hittade inte admin');
       admin = new users();

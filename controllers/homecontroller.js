@@ -13,19 +13,7 @@ module.exports.controller = function (app) {
    * index
    */
   app.get('/', function(req, res) {
-    if(req.session.user) {
-      res.locals.loggedin = true;
-      res.locals.username = req.session.user._id;
-      res.locals.color = req.session.user.color;
-    } else {
-      res.locals.loggedin = false;
-    }
-    res.locals.storyname = 'mainstory';
-    res.render('index', {
-       title : 'onewordstory'
-      ,description : 'The most epic story ever written'
-      ,author : 'adrianblp, cwinsnes, robineng'
-    });
+    res.redirect('/mainstory');
   });
 
   app.get('/500', function(req, res) {

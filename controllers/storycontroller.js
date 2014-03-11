@@ -1,6 +1,7 @@
 var url = require('url');
 var mongoose = require('mongoose');
 var StoryModel = require('../models/StoryModel');
+var wordModel = require('../models/WordModel');
 mongoose.connect('mongodb://localhost/oneword');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error when connecting to the database'));
@@ -8,15 +9,33 @@ db.once('open', function callback () {
 });
 
 var stories = mongoose.model('Stories', StoryModel);
+var words = mongoose.model('Words', wordModel);
 module.exports.controller = function(app) {
   /**
    * Get story with the id 'id'
    */
   app.get('/:name([a-zA-Z]+)', function(req, res) {
-    res.locals.storyname = req.params.name;
-    stories.findOne({storyname : req.params.name}, function(err, ans) {
-      if(err) { throw new Error('Could not find story' + req.params.name); }
-
+    if(req.session.user) {
+      res.locals.username = req.session.user._id; //Yeah, it's named wrong... Working on it
+      res.locals.loggedin = true;
+      res.locals.colors = req.session.user.colors;
+    }
+    stories.findOne({title : req.params.name}, function(err, ans) {
+      if(err) { res.send('Story does not exist');}
+      var storyid = ans._id;
+      res.locals.storyid = storyid;
+      words.find({storyId : ans._id}, function(err, wordSet) {
+        if(err) { 
+          console.log('Something happened when fetching word set');
+          throw new Error('Word set could not be found');
+        }
+        res.locals.wordSet = wordSet;
+        res.render('index', {
+          title : ans.title + '-onewordstory',
+          description : 'A story made by a community',
+          author : 'cwinsnes, adrianblp, robineng'
+        });
+      });
     });
   });
 
