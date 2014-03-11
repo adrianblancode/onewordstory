@@ -11,34 +11,6 @@ db.once('open', function callback () {
 var stories = mongoose.model('Stories', StoryModel);
 var words = mongoose.model('Words', wordModel);
 module.exports.controller = function(app) {
-  /**
-   * Get story with the id 'id'
-   */
-  app.get('/:name([a-zA-Z]+)', function(req, res) {
-    if(req.session.user) {
-      res.locals.username = req.session.user._id; //Yeah, it's named wrong... Working on it
-      res.locals.loggedin = true;
-      res.locals.colors = req.session.user.colors;
-    }
-    stories.findOne({title : req.params.name}, function(err, ans) {
-      if(err) { res.send('Story does not exist');}
-      var storyid = ans._id;
-      res.locals.storyid = storyid;
-      words.find({storyId : ans._id}, function(err, wordSet) {
-        if(err) { 
-          console.log('Something happened when fetching word set');
-          throw new Error('Word set could not be found');
-        }
-        res.locals.wordSet = wordSet;
-        res.render('index', {
-          title : ans.title + '-onewordstory',
-          description : 'A story made by a community',
-          author : 'cwinsnes, adrianblp, robineng'
-        });
-      });
-    });
-  });
-
 
   app.get('/createstory', function(req, res) {
     var storyArray = new Array();
@@ -80,6 +52,38 @@ module.exports.controller = function(app) {
         console.log('created story title: ' + story.title + ' for user: ' + req.session.user.username);
       }
     });
-    res.redirect('/');
+    res.redirect('/'+story.title);
   });
+  /**
+   * Get story with the id 'id'
+   */
+  app.get('/:name([a-zA-Z]+)', function(req, res) {
+    if(req.session.user) {
+      res.locals.username = req.session.user._id; //Yeah, it's named wrong... Working on it
+      res.locals.loggedin = true;
+      res.locals.colors = req.session.user.colors;
+    }
+    stories.findOne({title : req.params.name}, function(err, ans) {
+      if(ans) {
+        var storyid = ans._id;
+        res.locals.storyid = storyid;
+        words.find({storyId : ans._id}, function(err, wordSet) {
+          if(err) { 
+            console.log('Something happened when fetching word set');
+            throw new Error('Word set could not be found');
+          }
+          res.locals.wordSet = wordSet;
+          res.render('index', {
+            title : ans.title + '-onewordstory',
+            description : 'A story made by a community',
+            author : 'cwinsnes, adrianblp, robineng'
+          });
+        });
+      } else {
+        res.send('That story doesn\'t exist');
+      }
+    });
+  });
+
+
 }
