@@ -13,9 +13,10 @@ module.exports.controller = function(app) {
    * Get story with the id 'id'
    */
   app.get('/:name([a-zA-Z]+)', function(req, res) {
-    var id = req.params.id;
-    stories.findOne({storyid : id}, function(err, ans) {
-      //Make code that show the story and stuffz
+    res.locals.storyname = req.params.name;
+    stories.findOne({storyname : req.params.name}, function(err, ans) {
+      if(err) { throw new Error('Could not find story' + req.params.name); }
+
     });
   });
 

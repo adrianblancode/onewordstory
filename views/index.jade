@@ -29,9 +29,12 @@ append footer
     $(document).ready(function() { 
       //Get the storyname from the locals variable
       var storyname =!{JSON.stringify(locals)}.storyname;
-      var socket = io.connect('http://localhost:9001/?storyname=' + storyname);
+      var username =!{JSON.stringify(locals)}.username;
+      var color =!{JSON.stringify(locals)}.color;
+      var socket = io.connect('http://localhost:9001/?storyname=' + storyname + '&username=' + username + '&color=' + color);
       $('#sender').bind('click', function() {
-        socket.emit('message', document.getElementById('message').value);
+        var data = document.getElementById('message').value.split(" ")[0]; 
+        socket.emit('message', data);
       });
 
       socket.on('server_' + storyname, function(data) {

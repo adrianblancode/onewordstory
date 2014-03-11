@@ -15,6 +15,8 @@ module.exports.controller = function (app) {
   app.get('/', function(req, res) {
     if(req.session.user) {
       res.locals.loggedin = true;
+      res.locals.username = req.session.user._id;
+      res.locals.color = req.session.user.color;
     } else {
       res.locals.loggedin = false;
     }
