@@ -12,7 +12,7 @@ db.once('open', function callback () {
 var users = mongoose.model('Users', userModel);
 var stories = mongoose.model('Stories', storyModel);
 var logs = mongoose.model('Logs', logModel);
-var words = mongoose.model('Words', wordModel);
+var words = db.model('Words', wordModel);
 
 module.exports.controller = function (app) {
   /**
@@ -31,11 +31,11 @@ module.exports.controller = function (app) {
         if(err){
           console.log('cant fetch number of stories');
         }
-        words.find.distinct(function(err, distwcount){
-          console.log('DISTW' + distwcount);
+        words.aggregate([{$group: {_id: '$data', total_words: {$sum: 1}}}, {$sort: {total_words : -1}}, {$limit : 5}] , function(err, distwcount){
           if(err){
             console.log('cant count distinct words');
           }
+          var mostusedword = distwcount;
           if(loggedIn){
             stories.find({admin : req.session.user._id}, function(err, ustories){
               if(err){
@@ -51,6 +51,7 @@ module.exports.controller = function (app) {
               ,author : 'adrianblp, cwinsnes, robineng'
               ,ucount : ucount
               ,scount : scount
+              ,mostusedword : mostusedword
               ,ustories : ustories
               ,ulogs : ulogs
               });
@@ -63,6 +64,7 @@ module.exports.controller = function (app) {
               ,author : 'adrianblp, cwinsnes, robineng'
               ,ucount : ucount
               ,scount : scount
+              ,mostusedword : mostusedword
           });
         }
         });

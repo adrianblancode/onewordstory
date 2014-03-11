@@ -1,21 +1,31 @@
 extends layout
 
 block content
-    div(class='center')
-       p Number of users: #{ucount}
-       p Number of stories: #{scount}
+  span(class='topbar')
+    a(href='http://localhost:9001/')
+        p Home
+    a(href='http://localhost:9001/createstory')
+        p Stories
 
-       - if (typeof(ustories) !== 'undefined'){
-       p Your stories: 
-        each story in ustories
-             a(href='http://localhost:9001/#{story.title}')
-                p #{story.title}
-        -}
+  div(class='center')
+   p Number of users: #{ucount}
+   p Number of stories: #{scount}
+   p(class='largetopmargin') Most used words are:
+   each word in mostusedword
+      li #{word._id} with #{word.total_words} uses 
 
-        - if (typeof(ulogs) !== 'undefined'){
-       p Your Logins: 
-        each log in ulogs
-            p Date: #{log.date} Ip: #{log.ip}
-        -}
+   - if (typeof(ustories) !== 'undefined'){
+   p(class='largetopmargin') Your stories: 
+    each story in ustories
+      li
+         a(href='http://localhost:9001/story/#{story.title}')
+            p #{story.title}
+    -}
+
+    - if (typeof(ulogs) !== 'undefined'){
+   p(class='largetopmargin') Your Logins: 
+    each log in ulogs
+        li Date: #{log.date} Ip: #{log.ip}
+    -}
              
 
