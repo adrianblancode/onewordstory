@@ -11,7 +11,7 @@ block content
       a(href='http://localhost:9001/settings')
         p Settings
       a(href='http://localhost:9001/createstory')
-        p Create Story
+        p Stories
 
   div(class='center')
     a(href='http://localhost:9001/')
@@ -21,5 +21,42 @@ block content
 
     p Choose your words wisely.
 
-    input(type='text', class='input', id='message', maxlength='20')
-    input(type='submit', class='button leftmargin',  id='sender', value='Write')
+    if(locals.loggedin)
+      input(type='text', class='input', id='message', maxlength='20')
+      input(type='submit', class='button leftmargin', id='sender', value='Write')
+
+append footer
+  script(defer).
+    $(document).ready(function() { 
+      var words =!{JSON.stringify(locals)}.wordSet;
+      if(words) {
+        for(var i=0; i<words.length; i++) {
+          var e = document.createElement('span');
+          e.style.color = '#' + words[i].color;
+          var content = document.createTextNode(words[i].data + ' ');
+          e.appendChild(content);
+          document.getElementById('reciever').appendChild(e);
+        }
+      }
+      //Get the storyname from the locals variable
+      var storyid =!{JSON.stringify(locals)}.storyid;
+      var username =!{JSON.stringify(locals)}.username;
+      var color =!{JSON.stringify(locals)}.colors;
+      console.log(color);
+      var socket = io.connect('http://localhost:9001/?storyname=' + storyid + '&username=' + username + '&color=' + color);
+      $('#sender').bind('click', function() {
+        var data = document.getElementById('message').value.split(" ")[0]; 
+        console.log('Sending ' + data);
+        socket.emit('message', data);
+      });
+
+      socket.on('server_' + storyid, function(data) {
+          console.log('recieving ' + data.data);
+          var e = document.createElement('span');
+          e.style.color = '#'+data.color;
+          var content = document.createTextNode(data.data + ' ');
+          e.appendChild(content);
+          document.getElementById('message').value = '';
+          document.getElementById('reciever').appendChild(e);
+      });
+    });

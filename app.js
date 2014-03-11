@@ -7,6 +7,20 @@ var fs = require('fs');
 var port = (process.env.PORT || 9001);
 var app = express();
 
+var mongoose = require('mongoose');
+var userModel = require('./models/UserModel');
+var storyModel = require('./models/StoryModel');
+var wordModel = require('./models/WordModel');
+mongoose.connect('mongodb://localhost/oneword');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error when opening database'));
+db.once('open', function callback () {
+  //Do nothing special here
+});
+var users = mongoose.model('Users', userModel);
+var stories = mongoose.model('Stories', storyModel);
+var words = mongoose.model('Words', wordModel);
+
 //Set up env variables
 app.set('port', port);
 app.set('views', __dirname + '/views');
@@ -40,9 +54,20 @@ var io = io.listen(server);
 io.sockets.on('connection', function(socket){
   console.log('Client connected');
   socket.on('message', function(data) {
-    data = data.substring(0,20).split(" ")[0];
-    socket.broadcast.emit('server_message', data);
-    socket.emit('server_message', data);
+    console.log('message recieved');
+    var socketurl = socket.handshake.url;
+    console.log(socketurl);
+    var storyid  = socketurl.split('storyname=')[1].split('&')[0];
+    var userid = socketurl.split('username=')[1].split('&')[0];
+    var color = socketurl.split('color=')[1].split('&')[0];
+    socket.broadcast.emit('server_' + storyid, {data : data, color : color});
+    socket.emit('server_' + storyid, {data : data, color : color});
+    var word = new words();
+    word.userId = userid;
+    word.storyId = storyid;
+    word.data = data;
+    word.color = color;
+    word.save();
   });
   socket.on('disconnect', function() {
     console.log('Client disconnected');
@@ -52,20 +77,8 @@ io.sockets.on('connection', function(socket){
 
 //Check if admin and mainstory exists
 function checkAdminStory(){
-  console.log('kör');
-  var mongoose = require('mongoose');
-  var userModel = require('./models/UserModel');
-  var storyModel = require('./models/StoryModel');
-  mongoose.connect('mongodb://localhost/oneword');
-  var db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'connection error when opening database'));
-  db.once('open', function callback () {
-    //Do nothing special here
-  });
-  var users = mongoose.model('Users', userModel);
-  var stories = mongoose.model('Stories', storyModel);
 
-  users.findOne({username : 'admin'},{username : true, color : true}, function(err,obj) {  
+  users.findOne({username : 'admin'},{username : true, colors : true}, function(err,obj) {  
     if(!obj){
       console.log('hittade inte admin');
       admin = new users();

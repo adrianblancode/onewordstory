@@ -1,6 +1,6 @@
-$(document).ready(function() {   
+//$(document).ready(function() {   
 
-  var socket = io.connect();
+  /*var socket = io.connect();
 
   $('#sender').bind('click', function() {
    socket.emit('message', document.getElementById('message').value);     
@@ -11,7 +11,7 @@ $(document).ready(function() {
     document.getElementById('message').value = '';
     document.getElementById('reciever').appendChild(content);
   });
-});
+});*/
 
 function changeColor(c, input){
   input.value = input.value.toUpperCase();
