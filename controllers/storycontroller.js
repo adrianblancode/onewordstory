@@ -52,12 +52,12 @@ module.exports.controller = function(app) {
         console.log('created story title: ' + story.title + ' for user: ' + req.session.user.username);
       }
     });
-    res.redirect('/'+story.title);
+    res.redirect('/story/'+story.title);
   });
   /**
    * Get story with the id 'id'
    */
-  app.get('/:name([a-zA-Z]+)', function(req, res) {
+  app.get('/story/:name([a-zA-Z]+)', function(req, res) {
     if(req.session.user) {
       res.locals.username = req.session.user._id; //Yeah, it's named wrong... Working on it
       res.locals.loggedin = true;
