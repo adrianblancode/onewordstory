@@ -15,3 +15,11 @@ block content
         form(action='/createstory/create', method='POST', class='largetopmargin')
             input(type='text', class='input', name = 'story[title]', placeholder='Create new story', maxlength='20')
             input(type='submit', class='button',  id='sender', value='Create')
+   
+    div(id='stories', class='center')
+        p Stories: 
+        each story in storyarray
+             a(href='http://localhost:9001/#{story.title}')
+                p #{story.title}
+
+

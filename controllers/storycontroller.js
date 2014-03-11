@@ -20,15 +20,25 @@ module.exports.controller = function(app) {
     });
   });
 
+
   app.get('/createstory', function(req, res) {
+    var storyArray = new Array();
     if(!req.session.user){
       res.redirect('/login');
     }else{
-      res.render('createstory', {
-       title : 'onewordstory'
-      ,description : 'The most epic story ever written'
-      ,author : 'adrianblp, cwinsnes, robineng'
-    });
+      stories.find(function (err, sto){
+        if(err){
+          console.log("can't fetch stories")
+        }else{
+          console.log('STORIES: ' + sto);
+          res.render('createstory', {
+            title : 'onewordstory'
+            ,description : 'The most epic story ever written'
+            ,author : 'adrianblp, cwinsnes, robineng'
+            ,storyarray : sto
+          });
+        }
+      });
     }
     var result = stories.find().sort({storyid:-1}).limit(1);
   });
