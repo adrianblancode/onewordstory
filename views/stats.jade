@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    div(class='center')
+       p Number of users: #{ucount}
+       p Number of stories: #{scount}
+
+       - if (typeof(ustories) !== 'undefined'){
+       p Your stories: 
+        each story in ustories
+             a(href='http://localhost:9001/#{story.title}')
+                p #{story.title}
+        -}
+
+        - if (typeof(ulogs) !== 'undefined'){
+       p Your Logins: 
+        each log in ulogs
+            p Date: #{log.date} Ip: #{log.ip}
+        -}
+             
+

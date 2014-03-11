@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var userModel = require('../models/UserModel');
+var logModel = require('../models/LogModel');
 mongoose.connect('mongodb://localhost/oneword');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error when opening database'));
@@ -7,6 +8,7 @@ db.once('open', function callback () {
 //Do nothing special here
 });
 var users = mongoose.model('Users', userModel);
+var logs = mongoose.model('Logs', logModel);
 
 function hashgen(password, salt) {
   var crypto = require('crypto');
@@ -44,6 +46,15 @@ module.exports.controller = function(app) {
 //        req.session.username = req.body.user.username;
           users.findOne({username : req.body.user.username},{username : true, colors : true}, function(err,obj) {  
             req.session.user = obj;
+            var newLog = new logs({
+              userId : obj,
+              ip : req.connection.remoteAddress            
+            });
+            newLog.save(function(err){
+              if(err){
+                console.log("could not log user login");
+              }
+            });
             res.redirect('/');
           });
         } else {
@@ -89,6 +100,15 @@ module.exports.controller = function(app) {
         });
         users.findOne({username : req.body.user.username},{username : true, colors : true}, function(err,obj) {  
             req.session.user = obj;
+            var newLog = new logs({
+              userId : obj,
+              ip : req.connection.remoteAddress            
+            });
+            newLog.save(function(err){
+              if(err){
+                console.log("could not log user login");
+              }
+            });
             res.redirect('/');
           });
       }
