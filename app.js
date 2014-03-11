@@ -66,7 +66,7 @@ io.sockets.on('connection', function(socket){
     var word = new words();
     word.userId = userid;
     word.storyId = storyid;
-    word.data = escape(data);
+    word.data = data;
     word.color = color;
     word.save();
   });

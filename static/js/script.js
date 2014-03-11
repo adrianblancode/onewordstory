@@ -25,12 +25,3 @@ function initColor(c){
   document.getElementById('color').style.background = '#' + c;
   document.getElementById('colorinput').value = c.toUpperCase();
 }
-
-function escape (unsafe_str) {
-  return unsafe_str
-  .replace(/&/g, '&amp;')
-  .replace(/</g, '&lt;')
-  .replace(/>/g, '&gt;')
-  .replace(/\"/g, '&quot;')
-  .replace(/\'/g, '&#39;')
-}
