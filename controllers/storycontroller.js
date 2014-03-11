@@ -42,7 +42,7 @@ module.exports.controller = function(app) {
       res.send('No story title chosen');
     }
     var story = new stories();
-    story.title = req.body.story.title;
+    story.title = escape(req.body.story.title);
     console.log(req.body.story.title);
     story.admin = req.session.user._id;
     story.save(function (err){

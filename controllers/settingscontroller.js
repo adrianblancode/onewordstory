@@ -31,7 +31,7 @@ module.exports.controller = function(app) {
       req.session.user.colors = req.body.user.colors;
 
       users.findOne({username : req.session.user.username}, function(err, us) {
-        us.colors = req.session.user.colors;
+        us.colors = escape(req.session.user.colors);
         us.save();
       });
     }

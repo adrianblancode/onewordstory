@@ -60,12 +60,13 @@ io.sockets.on('connection', function(socket){
     var storyid  = socketurl.split('storyname=')[1].split('&')[0];
     var userid = socketurl.split('username=')[1].split('&')[0];
     var color = socketurl.split('color=')[1].split('&')[0];
+    data = data.substring(0, 20);
     socket.broadcast.emit('server_' + storyid, {data : data, color : color});
     socket.emit('server_' + storyid, {data : data, color : color});
     var word = new words();
     word.userId = userid;
     word.storyId = storyid;
-    word.data = data;
+    word.data = escape(data);
     word.color = color;
     word.save();
   });
