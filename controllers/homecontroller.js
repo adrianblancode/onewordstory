@@ -13,7 +13,7 @@ module.exports.controller = function (app) {
    * index
    */
   app.get('/', function(req, res) {
-    res.redirect('/mainstory');
+    res.redirect('/story/mainstory');
   });
 
   app.get('/500', function(req, res) {
